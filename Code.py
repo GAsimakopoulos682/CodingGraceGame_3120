@@ -441,6 +441,53 @@ def green_magic_room(player_info_arg):
         return "flee"
 
 
+def small_dark_room(player_info_arg):
+    """The Lime Room: Solve the goblins riddles to escape the dungeon.
+    Returns:
+        "flee" if the player lost RPS (so the adventure loop continues),
+        or raises GameOver (victory) if the player won.
+    """
+    print_goblin()
+    print("Solve me these riddles three, and passage I shall grant to thee.")
+    print("But be warned! Get on riddle wrong, and I promise you won't last long")
+
+
+    # --- Update player state ---
+    player_info_arg["location"] = "Lime Room"
+    player_info_arg["choices"].append("Lime Room")
+    show_player_info(player_info_arg)
+
+    # --- Riddle Game ---
+    riddle_one="It belongs to you, but your friends use it more. What is it?"
+    riddle_two="Paul's height is six feet, he's an assistant at a butcher's shop, and wears size 9 shoes. What does he weigh?"
+    riddle_three="Pronounced as one letter, And written with three, two letters there are, and two only in me. I’m double, I’m single, I’m black blue and gray, I’m read from both ends, and the same either way. What am I?"
+    riddles_solved=0
+    
+    print(riddle_one)
+    answer_one=input("Answer:\n")
+    if answer_one.lower() in ["name", "your name", "a name"]:
+        print("Correct!")
+        riddles_solved+=1
+        print(riddle_two)
+        answer_two=input("Answer:\n")
+    else:
+        you_died("You died. Guess you should brush up on your riddles!")
+    if answer_two.lower() in ["meat"]:
+            print("Correct!")
+            riddles_solved+=1
+            print(riddle_three)
+            answer_three=input("Answer:\n")
+    else:
+        you_died("You died. Guess you should brush up on your riddles!")
+    if answer_three.lower() in ["eye"]:
+            print("Correct!")
+            riddles_solved+=1    
+    else:
+        you_died("You died. Guess you should brush up on your riddles!")
+        
+    if riddles_solved==3:
+        you_won("You solved all the riddles! The goblin reveals a hidden exit and you escape the dungeon.")
+
 # ===========================================================================
 # CONTROL FUNCTIONS
 # ===========================================================================
@@ -709,6 +756,21 @@ def print_new_dungeon():
     print(r" /                                                        _ -                      \ ")
     print(r"/   -_- _ -                  _- _---                             -_-  -_-         \ ")
     print()
+
+
+def print_goblin():
+    print()
+    print(r"         ,      ,          ")
+    print(r"        /(.-""-.)\         ")
+    print(r"    |\  \/      \/  /|     ")
+    print(r"    | \ / =.  .= \ / |     ")
+    print(r"    \( \   o\/o   / )/     ")
+    print(r"     \_, '-/  \-' ,_/      ")
+    print(r"       /   \__/   \        ")
+    print(r"       \ \__/\__/ /        ")
+    print(r"     ___\ \|--|/ /__       ")
+    print(r"   /`    \      /    `\    ")
+    print(r"  /       '----'       \   ")
 
 
 # ===========================================================================
