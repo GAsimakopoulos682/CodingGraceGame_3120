@@ -452,6 +452,7 @@ def small_dark_room(player_info_arg):
     print("But be warned! Get on riddle wrong, and I promise you won't last long")
 
 
+
     # --- Update player state ---
     player_info_arg["location"] = "Lime Room"
     player_info_arg["choices"].append("Lime Room")
@@ -487,6 +488,41 @@ def small_dark_room(player_info_arg):
         
     if riddles_solved==3:
         you_won("You solved all the riddles! The goblin reveals a hidden exit and you escape the dungeon.")
+
+#-----------#DICE ROOM#------------#
+def dice_room(player_info_arg) : 
+    print_dice()
+
+    print("\nYou have entered the Checkered Dice Room.")
+
+    player_info_arg["location"] = "Checkered Dice Room"
+    player_info_arg["choices"].append("Checkered Dice Room")
+    show_player_info(player_info_arg)
+
+    print("\nA massive stone dice sits in the center of the room.")
+    print('"Roll the dice and accept your fate."')
+
+    action = input("\nDo you roll the dice or leave? [roll | leave] > ").lower()
+
+    if action == "leave":
+        return "flee"
+
+    elif action == "roll":
+
+        dice_roll = random.randint(1,6)
+
+        print(f"\nYou rolled a {dice_roll}!")
+
+        print_dice_face(dice_roll)
+
+        if dice_roll % 2 == 1:
+            you_died("A trapdoor opens beneath your feet")
+
+        else:
+            you_won("A hidden door opens and you escape the dungeon")
+
+    else:
+        return "flee"
 
 # ===========================================================================
 # CONTROL FUNCTIONS
@@ -549,12 +585,12 @@ def start_new_adventure(player_info_arg):
     while True:
         print_new_dungeon()
         print("You enter a room, and you see a red door to your left, "
-              "blue and green doors to your right, and a lime door in front of you.")
+              "blue and green doors to your right, checkered and a lime door in front of you.")
         door_picked = input("Do you pick the red door, blue door, "
-                            "green door, or lime door? > ")
+                            "green door, checkered door, or lime door? > ")
 
         # We compare only the first few characters so that inputs like
-        # "red door", "blue", or "green one" all work.
+        # "red door", "blue", "lime", "checkered" or "green one" all work.
         door = door_picked.strip().lower()
 
         if door.startswith("red"):
@@ -565,8 +601,10 @@ def start_new_adventure(player_info_arg):
             room_result = green_magic_room(player_info_arg)
         elif door.startswith("lime"):
             room_result = small_dark_room(player_info_arg)
+        elif door.startswith("checkered"):
+            room_result = dice_room(player_info_arg)
         else:
-            print("Sorry, it's either 'red', 'blue', or 'green' as the "
+            print("Sorry, it's either 'red', 'blue', 'lime' , 'checkered' or 'green' as the "
                   "answer. You're the weakest link, goodbye!")
             # Continue the loop so the player can try again.
             continue
@@ -763,7 +801,7 @@ def print_new_dungeon():
 def print_goblin():
     print()
     print(r"         ,      ,          ")
-    print(r"        /(.-""-.)\         ")
+    print(r'        /(.-""-.)\         ')
     print(r"    |\  \/      \/  /|     ")
     print(r"    | \ / =.  .= \ / |     ")
     print(r"    \( \   o\/o   / )/     ")
@@ -774,6 +812,74 @@ def print_goblin():
     print(r"   /`    \      /    `\    ")
     print(r"  /       '----'       \   ")
 
+
+def print_dice():
+    print()
+    print(r"        _______")
+    print(r"       /      /|")
+    print(r"      /______/ |")
+    print(r"     |      |  |")
+    print(r"     |  o   |  |")
+    print(r"     |      | /")
+    print(r"     |______|/")
+    print()
+
+
+def print_dice_face(number):
+
+    if number == 1:
+        print(r"""
++-------+
+|       |
+|   o   |
+|       |
++-------+
+""")
+
+    elif number == 2:
+        print(r"""
++-------+
+| o     |
+|       |
+|     o |
++-------+
+""")
+
+    elif number == 3:
+        print(r"""
++-------+
+| o     |
+|   o   |
+|     o |
++-------+
+""")
+
+    elif number == 4:
+        print(r"""
++-------+
+| o   o |
+|       |
+| o   o |
++-------+
+""")
+
+    elif number == 5:
+        print(r"""
++-------+
+| o   o |
+|   o   |
+| o   o |
++-------+
+""")
+
+    elif number == 6:
+        print(r"""
++-------+
+| o   o |
+| o   o |
+| o   o |
++-------+
+""")
 
 # ===========================================================================
 # ENTRY POINT
