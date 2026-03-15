@@ -523,6 +523,42 @@ def dice_room(player_info_arg) :
 
     else:
         return "flee"
+  
+  #-----------#Enchanted Spell Room#------------#
+def enchanted_spell_room(player_info_arg):
+    """Room where the player must say the correct spell to escape."""
+
+    print("\nYou walk into a strange magical room.")
+    print("Candles are floating in the air and a locked door is in front of you.")
+
+    player_info_arg["location"] = "Enchanted Spell Room"
+
+    # the magic in the room drains some health
+    player_info_arg["health"] = player_info_arg["health"] - 10
+
+    # player finds a wand
+    item = "Ancient Wand"
+    if item not in player_info_arg["inventory"]:
+        player_info_arg["inventory"].append(item)
+        print("You found an Ancient Wand.")
+
+    player_info_arg["choices"].append("Enchanted Spell Room")
+    show_player_info(player_info_arg)
+
+    print("\nWords appear on the wall.")
+    print("Maybe you need to say a spell to open the door.")
+
+    choice = input("[say spell | flee] > ").strip().lower()
+
+    if choice == "flee":
+        return "flee"
+
+    elif choice == "alohomora":
+        print("The door unlocks and you escape the room.")
+        return player_info_arg
+
+    else:
+        you_died("The spell fails and the magic in the room destroys you.")
 
 # ===========================================================================
 # CONTROL FUNCTIONS
