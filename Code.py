@@ -620,7 +620,7 @@ def start_new_adventure(player_info_arg):
 
     while True:
         print_new_dungeon()
-        print("You enter a room, and you see a red door to your left, "
+        print("You enter a room, and you see a red and purple door to your left, "
               "blue and green doors to your right, checkered and a lime door in front of you.")
         door_picked = input("Do you pick the red door, blue door, "
                             "green door, checkered door, or lime door? > ")
@@ -639,8 +639,10 @@ def start_new_adventure(player_info_arg):
             room_result = small_dark_room(player_info_arg)
         elif door.startswith("checkered"):
             room_result = dice_room(player_info_arg)
+        elif door.startswith("purple"):
+            room_result = enchanted_spell_room(player_info_arg)
         else:
-            print("Sorry, it's either 'red', 'blue', 'lime' , 'checkered' or 'green' as the "
+            print("Sorry, it's either 'red', 'blue', 'lime' , 'checkered', 'purple' or 'green' as the "
                   "answer. You're the weakest link, goodbye!")
             # Continue the loop so the player can try again.
             continue
